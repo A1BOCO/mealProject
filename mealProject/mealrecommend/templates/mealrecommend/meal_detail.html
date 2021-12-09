@@ -1,0 +1,78 @@
+{% extends 'mealrecommend/base.html'%}
+{% block content%}
+{% load static %}
+{% if messages %}
+<br>
+{% for message in messages %}
+<div class="text-center alert alert-{{message.tags}}" role="alert">
+    <button aria-label="Close" class="close" data-dismiss="alert" type="button">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+<br>
+<br>
+<h1 class="text-center">{{ meal.name }}</h1>
+<br>
+<div class="row ">
+    <div class="col-3">
+    </div>
+    <div class="col-6 justify-content-center">
+
+        <div class="card" style="width: 30rem;">
+            <img alt="Card image cap" class="card-img-top" src="{{meal.image_url.url}}">
+            <div class="card-body">
+                <h5 class="card-title"> Description </h5>
+                <p class="card-text"> {{ meal.description }}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Number of Vote : {{ meal.number_of_votes}}</li>
+                <li class="list-group-item">Country of Origin : {{ meal.country_of_origin}}</li>
+                <li class="list-group-item">Vestibulum at eros</li>
+            </ul>
+            <div class="card-body">
+                <div class="d-flex justify-content-center my-4">
+                    <div class="w-75">
+                        <input class="custom-range" id="customRange12" max="5" min="0" step="1" type="range">
+                    </div>
+                    <span class="font-weight-bold text-primary ml-2 valueSpan2"></span>
+                </div>
+                <a class="btn" href="" id="favorite2">submit</a>
+            </div>
+        </div>
+
+
+        <div class="col-3">
+
+        </div>
+
+    </div>
+</div>
+<script src="{% static 'js/main.js' %}"></script>
+<script>
+    $(document).ready(function() {
+
+  const $valueSpan = $('.valueSpan2');
+  const $value = $('#customRange12');
+  $valueSpan.html($value.val());
+  $value.on('input change', () => {
+
+    $valueSpan.html($value.val());
+  });
+});
+
+{% autoescape off %}
+var mealid = {{ meal.id }};
+{% endautoescape %}
+
+
+let btn = document.getElementById("favorite2")
+btn.addEventListener("click",function(){changeHref(mealid)})
+
+
+
+</script>
+
+{% endblock %}

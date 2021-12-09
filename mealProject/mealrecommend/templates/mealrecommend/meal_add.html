@@ -1,0 +1,29 @@
+{% extends 'mealrecommend/base.html' %}
+{% block content%}
+
+{{ request.user }}
+<div class="container">
+    <form enctype="multipart/form-data" method="POST">
+        {% csrf_token %}
+         {{ form.as_p }}
+         <button class="btn">Submit</button>
+    </form>
+
+</div>
+
+
+<script>
+    $(document).ready(function() {
+    $('.js-example-basic-multiple').select2();
+});
+
+</script>
+
+
+
+
+{% endblock %}
+
+
+
+

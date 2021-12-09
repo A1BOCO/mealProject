@@ -1,0 +1,80 @@
+{% extends 'meals/base_second.html'%}
+{% block content%}
+{% load static %}
+{% if messages %}
+<br>
+{% for message in messages %}
+<div class="text-center alert alert-{{message.tags}}" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+<br>
+<br>
+<h1 class="text-center">{{ meal.name }}</h1>
+<br>
+<div class="row ">
+    <div class="col-3">
+    </div>
+    <div class="col-6 justify-content-center">
+
+        <div class="col-12 ">
+            <img class="d-block mx-auto" src="{{meal.image_url.url}}">
+        </div>
+
+        <div class="col-12">
+
+            Country of Origin
+            <p>{{ meal.country_of_origin}}</p>
+
+            <div class="col-12">
+                {{ meal.description }}
+            </div>
+            <div class="col-12">
+                {{ meal.number_of_votes}}
+            </div>
+        </div>
+        <div class="d-flex justify-content-center my-4">
+            <div class="w-75">
+                <input class="custom-range" id="customRange11" max="5" min="0" step="1" type="range">
+            </div>
+            <span class="font-weight-bold text-primary ml-2 valueSpan2"></span>
+        </div>
+        <a id="favorite" class="btn" href="">submit</a>
+
+
+    </div>
+    <div class="col-3">
+
+    </div>
+
+</div>
+
+<script src="{% static 'js/main.js' %}"></script>
+<script>
+    $(document).ready(function() {
+
+  const $valueSpan = $('.valueSpan2');
+  const $value = $('#customRange11');
+  $valueSpan.html($value.val());
+  $value.on('input change', () => {
+
+    $valueSpan.html($value.val());
+  });
+});
+
+{% autoescape off %}
+var mealid = {{ meal.id }};
+{% endautoescape %}
+
+
+let btn = document.getElementById("favorite")
+btn.addEventListener("click",function(){changeHref(mealid)})
+
+
+</script>
+
+{% endblock %}

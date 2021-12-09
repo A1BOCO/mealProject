@@ -1,0 +1,53 @@
+{% extends 'meals/base_second.html'%}
+{% block content%}
+<br>
+<br>
+{% if category_list.0.typical_mealtime %}
+{% if category_list.0.typical_mealtime == 1%}
+<h1 class="text-center">Breakfast</h1>
+
+{% endif %}
+{% if category_list.0.typical_mealtime == 2%}
+<h1 class="text-center">Lunch</h1>
+
+{% endif %}
+{% if category_list.0.typical_mealtime == 3%}
+<h1 class="text-center">Dinner</h1>
+
+{% endif %}
+{% endif %}
+
+<div class="row">
+    <div class="col-9"></div>
+    <div class="col-3">
+        <p>Sort by</p>
+        <a href="#">Rating</a>
+        <a href="#">Country</a>
+        <a href="#">Date</a>
+    </div>
+</div>
+<div class="row justify-content-center">
+    {% for item in category_list %}
+    <div class="col-4 justify-content-center"></div>
+    <div class="row col-4">
+        <div class="col-5">
+         <a href="{% url 'meals:meal_detail' item.id %}">
+            <img class="card-img-top rounded py-3 px-3 img-thumbnail img-responsive" src="{{item.image_url.url}}">
+        </a>
+        </div>
+        <div class="col-5 align-self-center">
+            {{ item.name }}
+            {{ item.name.number_of_votes }}
+
+        </div>
+
+    </div>
+    <div class="col-4"></div>
+
+    {% endfor %}
+
+</div>
+
+
+
+{% endblock %}

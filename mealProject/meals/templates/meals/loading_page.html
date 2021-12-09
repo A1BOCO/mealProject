@@ -1,0 +1,123 @@
+{% extends 'meals/base.html'%}
+{% block content%}
+<br>
+<h1 class="text-center">Rate Your Favorite Meals</h1>
+{% if messages %}
+<br>
+{% for message in messages %}
+<div class="alert alert-{{message.tags}}" role="alert">
+    <button aria-label="Close" class="close" data-dismiss="alert" type="button">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+<div class="row my-5">
+
+    <div class="col-8">
+        <div class="row justify-content-center">
+            <div class="col-1"></div>
+            <div class="col-2">
+                <form enctype="multipart/form-data" id="breakfast" method="post">
+                    <div class="d-flex justify-content-center">
+                        <a class="text-center" href="{% url 'meals:category_list' 1 %}">Break Fast</a>
+                    </div>
+                    {% for meal in breakfast%}
+                    <div class="d-flex justify-content-center">
+                        <a href="{% url 'meals:meal_detail' meal.id %}">
+                            <img class="card-img-top rounded py-3 px-3 img-fluid portrait" src="{{meal.image_url.url}}">
+                        </a>
+                    </div>
+                    {% endfor %}
+                </form>
+            </div>
+            <div class="col-2">
+                <form enctype="multipart/form-data" id="lunch" method="post">
+                    <div class="d-flex justify-content-center">
+                        <a class="text-center " href="{% url 'meals:category_list' 2 %}">lunch</a>
+                    </div>
+                    {% for meal in lunch%}
+                    <div class="d-flex justify-content-center">
+                        <a href="{% url 'meals:meal_detail' meal.id %}">
+                            <img class="card-img-top rounded py-3 px-3 portrait" src="{{meal.image_url.url}}">
+                        </a>
+                    </div>
+                    {% endfor %}
+                </form>
+            </div>
+            <div class="col-2">
+                <form enctype="multipart/form-data" id="dinner" method="post">
+
+                    <div class="d-flex justify-content-center">
+                        <a class="text-center " href="{% url 'meals:category_list' 3 %}">dinner</a>
+                    </div>
+
+                    {% for meal in dinner%}
+                    <div class="d-flex justify-content-center">
+                        <a href="{% url 'meals:meal_detail' meal.id %}">
+                            <img class="card-img-top rounded py-3 px-3 img-fluid portrait" src="{{meal.image_url.url}}">
+                        </a>
+                    </div>
+                    {% endfor %}
+
+                </form>
+            </div>
+            <div class="col-2">
+                <form enctype="multipart/form-data" id="recently_added" method="post">
+
+                    <div class="d-flex justify-content-center">
+                        <a class="text-center" href="{% url 'meals:category_list' 4 %}">recently added</a>
+                    </div>
+
+                    {% for meal in recently_added%}
+                    <div class="d-flex justify-content-center">
+                        <a href="{% url 'meals:meal_detail' meal.id %}">
+                            <img class="card-img-top rounded py-3 px-3 portrait" src="{{meal.image_url.url}}" >
+                        </a>
+                    </div>
+                    {% endfor %}
+
+                </form>
+            </div>
+            <div class="col-2">
+                <form enctype="multipart/form-data" id="top_rated" method="post">
+
+                    <div class="d-flex justify-content-center">
+                        <a class="text-center" href="{% url 'meals:category_list' 5 %}">top rated</a>
+                    </div>
+
+                    {% for meal in top_rated%}
+                    <div class="d-flex justify-content-center">
+                        <a href="{% url 'meals:meal_detail' meal.id %}">
+                            <img class="card-img-top rounded py-3 px-3 portrait" src="{{meal.image_url.url}}">
+                        </a>
+                    </div>
+                    {% endfor %}
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-4 px-5">
+
+        <div class="container-fluid h-custom">
+            <p> Add Meal</p>
+            <form action="{% url 'meals:index' %}" enctype="multipart/form-data" id="mealpost" method="post" class="row">
+                {% csrf_token %}
+                {% for item in form %}
+                <label class="col-form-label col-4">{{ item.label }}</label>
+                <div class="col-8">{{ item }}</div>
+                {% endfor %}
+                <div class="py-3">
+                    <button class="btn btn-block btn-outline-success mt-5 my-sm-0" type="submit">post</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+</div>
+
+
+{% endblock %}

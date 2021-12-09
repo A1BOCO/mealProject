@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+    <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+    <title>Favorite Meals</title>
+    <!-- MDB icon -->
+    <link href="img/mdb-favicon.ico" rel="icon" type="image/x-icon"/>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"/>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+    <!-- Bootstrap core CSS -->
+    <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.css" rel="stylesheet">
+    <!-- MDB -->
+    <script crossorigin="anonymous"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+</head>
+<body>
+
+    <header class="d-flex justify-content-center py-3 mb-4 border-bottom">
+
+
+        <ul class="nav nav-pills">
+            {% if request.user.is_authenticated %}
+            <li class="nav-item"><a aria-current="page" class="nav-link active" href="{% url 'mealrecommend:index' %}">Home</a></li>
+            <li class="nav-item"><a class="nav-link active" href="#">See History</a></li>
+            <li class="nav-item"><a class="nav-link active" href="{% url 'mealrecommend:add_meal' %}">Add A Meal</a></li>
+            <li class="nav-item"><a class="nav-link active" href="{% url 'mealrecommend:logout' %}">Logout</a></li>
+            {% else %}
+            <li class="nav-item"><a aria-current="page" class="nav-link disabled" href="#">Home</a></li>
+            <li class="nav-item"><a class="nav-link disabled" href="#">See History</a></li>
+            <li class="nav-item"><a class="nav-link disabled" href="#">Add A Meal</a></li>
+            <li class="nav-item"><a class="nav-link disabled" href="#">Logout</a></li>
+
+            {% endif %}
+        </ul>
+
+        {% if request.user.is_authenticated %}
+        <div class="col-md-6 text-end">
+            Hello {{ request.user }}
+        </div>
+        {% else %}
+
+
+
+        <div class="login-container col-md-5 text-end">
+            <form action="{% url 'mealrecommend:loginuser' %}" method="POST">
+                {% csrf_token %}
+                {{ loginform.username }}
+                {{ loginform.password }}
+                <input name="next" type="hidden" value="{{ request.path }}">
+                <button type="submit" class="btn btn-warning">Login</button>
+            </form>
+        </div>
+        <div class="col-md-1 text-end">
+            <a class="btn btn-warning" type="button" href="{% url 'meals:signup' %}">Sign-up</a>
+        </div>
+
+        {% endif %}
+    </header>
+
+
+{% block content %}
+{% endblock %}
+
+
+</body>
+</html>

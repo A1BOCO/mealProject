@@ -1,0 +1,74 @@
+{% extends 'mealrecommend/base.html' %}
+{% block content%}
+<h1 class="text-center py-3">Meal Recommender</h1>
+
+<h3 class="text-center ">Select one or more buttons to narrow down your </h3>
+<h3 class="text-center ">search and register to see recommendations </h3>
+
+<div class="container">
+
+    <form action="{% url 'mealrecommend:index' %}" method="POST">
+        {% csrf_token %}
+        <select class="js-example-basic-multiple form-control" multiple="multiple" name="tags" onchange="submit(this.form)">
+            {% for tag in tags %}
+            {% if tag.id in ids %}
+            <option selected value={{ tag.id }}>{{ tag.name }}</option>
+            {% else %}
+             <option value={{ tag.id }}>{{ tag.name }}</option>
+            {% endif %}
+            {% endfor %}
+
+        </select>
+        {{ ids }}
+    </form>
+
+
+        <p class="text-center pt-5"> Sort by</p>
+        <div class="text-center pb-5">
+        <a href="#">Average Rating </a>
+        <a href="#">Country of Origin </a>
+        <a href="#">Date Added</a>
+        </div>
+
+            <table class="table">
+                <tbody>
+                {% for meal in meals %}
+                <tr>
+                    <th scope="col">
+                        <a href="{% url 'mealrecommend:meal_detail' meal.id %}">
+                            <img class="card-img-top portrait" src="{{ meal.image_url.url }}">
+                        </a>
+                    </th>
+                    <th scope="col">
+                        {{ meal.name }}
+                    </th>
+                    <th scope="col">
+                        {{ meal.country_of_origin }}
+                    </th>
+                    <th scope="col">
+                        {{ meal.number_of_votes }}
+                    </th>
+
+                </tr>
+                {% endfor %}
+                </tbody>
+
+
+            </table>
+
+
+
+</div>
+
+
+<script>
+
+$(document).ready(function() {
+    $('.js-example-basic-multiple').select2();
+});
+
+
+</script>
+
+
+{% endblock %}
